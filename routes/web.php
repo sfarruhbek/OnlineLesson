@@ -49,3 +49,5 @@ Route::resource('Test',\App\Http\Controllers\TestController::class)->middleware(
 Route::post("/showsc",[\App\Http\Controllers\AdminController::class,'showsc'])->middleware(['auth','verified'])->name('showsc');
 
 Route::post("/showtp",[\App\Http\Controllers\AdminController::class,'showtp'])->middleware(['auth','verified'])->name('showtp');
+
+Route::post("zoom",[\App\Http\Controllers\AdminController::class,'zoom'])->name('zoom')->middleware(['auth','verified']);

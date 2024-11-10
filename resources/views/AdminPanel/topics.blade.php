@@ -121,6 +121,37 @@
                                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                             </svg>
                         </button>
+                        <form id="form_zoom" action="{{route('zoom')}}" method="POST" onsubmit='
+                                        if(document.getElementById("zoom_id").value){
+                                            return true;
+                                        }
+                                        let userInput = prompt("Iltimos, meeting ID sini kiriting");
+                                        if (userInput === null) {
+                                            return false;
+                                        }
+                                        document.getElementById("zoom_id").value = userInput;
+                                        document.getElementById("form_zoom").submit();
+                                ' style="display: inline">
+                            @csrf
+                            <input value="{{$science->id}}" name="science_id" required hidden>
+                            @if($science->meet_id)
+                                <input id="zoom_id" name="zoom_id" value="{{$science->meet_id}}" hidden>
+                                <input value="0" name="zoom" required hidden>
+                                <button type="submit" style="color: red; margin-left: 20px" title="Meeting">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-camera-video-off" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M10.961 12.365a2 2 0 0 0 .522-1.103l3.11 1.382A1 1 0 0 0 16 11.731V4.269a1 1 0 0 0-1.406-.913l-3.111 1.382A2 2 0 0 0 9.5 3H4.272l.714 1H9.5a1 1 0 0 1 1 1v6a1 1 0 0 1-.144.518zM1.428 4.18A1 1 0 0 0 1 5v6a1 1 0 0 0 1 1h5.014l.714 1H2a2 2 0 0 1-2-2V5c0-.675.334-1.272.847-1.634zM15 11.73l-3.5-1.555v-4.35L15 4.269zm-4.407 3.56-10-14 .814-.58 10 14z"/>
+                                    </svg>
+                                </button>
+                            @else
+                                <input value="1" name="zoom" required hidden>
+                                <input id="zoom_id" name="zoom_id" hidden>
+                                <button type="submit" style="color: #0a58ca; margin-left: 20px" title="Meeting">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"/>
+                                    </svg>
+                                </button>
+                            @endif
+                        </form>
                     </div>
                     <div class="flex-auto px-0 pt-0 pb-2">
                         <div class="p-0 overflow-x-auto">
@@ -203,7 +234,11 @@
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
 </script>
-
+<script>
+    function joinZoomMeeting(zoom_id) {
+        window.location.href = "https://zoom.us/j/" + zoom_id;
+    }
+</script>
 <script>
     function addsc() {
         Swal.fire({

@@ -67,4 +67,21 @@ class AdminController extends Controller
             "data" => $data,
         ]);
     }
+    public function zoom(Request $request)
+    {
+        $request->validate([
+           'science_id'=>"required",
+           'zoom'=>"required",
+        ]);
+
+        $data = Science::find($request->science_id);
+        if ($request->zoom == "1"){
+            $data->meet_id = $request->zoom_id;
+            $data->save();
+        }else{
+            $data->meet_id = null;
+            $data->save();
+        }
+        return redirect()->back();
+    }
 }
